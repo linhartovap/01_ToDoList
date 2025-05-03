@@ -18,13 +18,17 @@ def show_list(todolist):
 todolist = []
 
 while True:
-    v1 = int(input("What you want to do? Write 1 to add task, 2 to delete task, 3 to print the list or 4 to exit:\n"))
+    try:
+        v1 = int(input("What you want to do? Write 1 to add task, 2 to delete task, 3 to print the list or 4 to exit:\n"))
+    except ValueError:
+        print("Enter a valid number")
+        continue
+    
     if v1 == 1:
         task_name = input("Write task name to add...\n")
         task_date = input("Write due date of this task...\n")
         task_duration = input("Write task duration...\n")
         task = {"name" : task_name, "date" : task_date, "duration" : task_duration}
-
         if task in todolist:
             print("This task is in To Do List already.")
         else:
