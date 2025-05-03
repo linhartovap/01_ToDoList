@@ -2,8 +2,8 @@ def add_task(task):
     todolist.append(task)
     return todolist
 
-def remove_task(task):
-    todolist.remove(task)
+def remove_task(matching_tasks[0]):
+    todolist.remove(matching_tasks[0])
     return todolist
 
 def show_list(todolist):
@@ -12,7 +12,7 @@ def show_list(todolist):
     else:
         print(f"In you ToDoList are following tasks:")
         for n, task in enumerate(todolist, 1):
-            print(f"{n} : {task["name"]}; {task["date"]}; {task["duration"]}")
+            print(f"{n} : {task['name']}; {task['date']}; {task['duration']}")
     
     
 todolist = []
@@ -38,13 +38,21 @@ while True:
 
     elif v1 == 2:
         task_name = input("Write task name to delete...\n")
-        task_date = input("Write due date of this task...\n")
-        task_duration = input("Write task duration...\n")
-        task = {"name" : task_name, "date" : task_date, "duration" : task_duration}
-        if task not in todolist:
-            print("This task is not in To Do List.")
-        else:
-            remove_task(task)
+        matching_tasks = [task for task in todolist if task["name"] == task_name]
+
+        if len(matching_tasks) == 1:
+            remove_task(matching_tasks[0])
+
+        elif len(matching_tasks) > 1:
+            task_date = input("Write task due date...\n")
+            matching_tasks = [task for task in matching_tasks if task["date"] == task_date]
+            if len(matching_tasks) == 1:
+                remove_task(matching_tasks[0])
+            elif len(matching_tasks) > 1:
+                task_duration = input("Write task duration...\n")
+                matching_tasks = [task for task in matching_tasks if task["duration"] == task_duration]
+                remove_task(matching_tasks[0])
+
     elif v1 == 3:
         show_list(todolist)
     elif v1 == 4:
